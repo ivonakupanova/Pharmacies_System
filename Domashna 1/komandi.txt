@@ -1,0 +1,3 @@
+osmfilter new_map.osm --keep="place=suburb and name= and name!=null" --ignore-dependencies | osmconvert64 - --all-to-nodes --csv="@lon @lat name" --csv-headline --csv-separator="," -o="Opstini.csv"
+
+osmfilter new_map.osm --keep="amenity=pharmacy" | osmconvert64 - --all-to-nodes --csv="@id @lon @lat name addr:street opening_hours email operator" --csv-headline --csv-separator="," -o="Apteki.csv"
