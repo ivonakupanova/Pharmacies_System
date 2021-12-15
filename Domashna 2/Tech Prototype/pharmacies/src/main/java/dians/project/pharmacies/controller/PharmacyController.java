@@ -1,8 +1,6 @@
 package dians.project.pharmacies.controller;
 
-import dians.project.pharmacies.repository.MunicipalitiesRepository;
 import dians.project.pharmacies.service.MunicipalitiesServiceImpl;
-import dians.project.pharmacies.service.PharmaciesService;
 import dians.project.pharmacies.service.PharmaciesServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

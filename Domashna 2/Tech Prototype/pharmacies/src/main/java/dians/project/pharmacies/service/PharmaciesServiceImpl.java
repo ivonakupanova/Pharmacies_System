@@ -1,15 +1,15 @@
 package dians.project.pharmacies.service;
 
 import dians.project.pharmacies.model.Pharmacy;
-import dians.project.pharmacies.repository.PharmaciesRepository;
+import dians.project.pharmacies.repository.PharmacyRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class PharmaciesServiceImpl implements PharmaciesService {
-    public final PharmaciesRepository pharmaciesRepository;
-    public PharmaciesServiceImpl(PharmaciesRepository pharmaciesRepository)
+    public final PharmacyRepository pharmaciesRepository;
+    public PharmaciesServiceImpl(PharmacyRepository pharmaciesRepository)
     {
         this.pharmaciesRepository=pharmaciesRepository;
     }
@@ -21,7 +21,7 @@ public class PharmaciesServiceImpl implements PharmaciesService {
 
     @Override
     public List<Pharmacy> findByName(String name) {
-        return pharmaciesRepository.findByName(name);
+        return pharmaciesRepository.findPharmaciesByName(name);
     }
 
 

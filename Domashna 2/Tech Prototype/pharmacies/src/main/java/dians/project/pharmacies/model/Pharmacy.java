@@ -2,12 +2,27 @@ package dians.project.pharmacies.model;
 
 import lombok.Data;
 
+import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 @Data
+@Entity
 public class Pharmacy {
+    @Id
+    public long id;
+
     public String name;
+
     public double coordinatesLon;
+
     public double coordinatesLat;
+
+    public String address;
+
     public String workingHours;
+
+    public Pharmacy(){}
 
     public Pharmacy(String name, double coordinatesLon, double coordinatesLat, String workingHours) {
         this.name = name;
