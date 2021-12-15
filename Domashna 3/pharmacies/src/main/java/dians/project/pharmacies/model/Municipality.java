@@ -15,22 +15,27 @@ import java.util.List;
 public class Municipality {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long id;
+    private long id;
 
-    public String name;
+    private String name;
 
-    @ManyToMany(fetch=FetchType.EAGER)
-    public List<Pharmacy> pharmacyList;
+    private double coordinatesLon;
 
-    public double coordinatesLon;
-
-    public double coordinatesLat;
+    private double coordinatesLat;
 
     public Municipality(){}
     public Municipality(String name, double coordinatesLon, double coordinatesLat) {
         this.name = name;
         this.coordinatesLon = coordinatesLon;
         this.coordinatesLat = coordinatesLat;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {

@@ -13,6 +13,4 @@ public class PharmaciesApplication {
     public static void main(String[] args) {
         SpringApplication.run(PharmaciesApplication.class, args);
     }
-
-
 }
