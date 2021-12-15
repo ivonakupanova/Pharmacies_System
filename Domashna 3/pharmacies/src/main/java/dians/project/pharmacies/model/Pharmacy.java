@@ -10,17 +10,20 @@ import javax.persistence.Id;
 @Entity
 public class Pharmacy {
     @Id
-    public long id;
+    private long id;
 
-    public String name;
+    private String name;
 
-    public double coordinatesLon;
+    private double coordinatesLon;
 
-    public double coordinatesLat;
+    private double coordinatesLat;
 
-    public String address;
+    private String address;
 
-    public String workingHours;
+    private String workingHours;
+
+    @ManyToOne
+    private Municipality opstina;
 
     public Pharmacy(){}
 
@@ -30,6 +33,30 @@ public class Pharmacy {
         this.coordinatesLat = coordinatesLat;
         this.workingHours = workingHours;
 
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Municipality getOpstina() {
+        return opstina;
+    }
+
+    public void setOpstina(Municipality opstina) {
+        this.opstina = opstina;
     }
 
     public String getName() {

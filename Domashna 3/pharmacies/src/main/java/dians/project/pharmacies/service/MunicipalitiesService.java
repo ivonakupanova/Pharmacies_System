@@ -10,5 +10,5 @@ import java.util.List;
 public interface MunicipalitiesService {
     List<Municipality> findAll();
     Municipality findByName(String name);
-    List<Pharmacy> findPharmaciesByMunicipalityName(String name);
+//    List<Pharmacy> findPharmaciesByMunicipalityName(String name);
 }

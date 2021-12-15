@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Home Page</title>
@@ -12,7 +12,7 @@
 <body>
 <nav class="navbar navbar-expand-md navbar-light bg-white">
     <div class="container">
-        <img src="../static/pharmacy-logo.png"><a class="navbar-brand nav-link active" href="/pharmacies/home">Моја<b>Аптека</b></a>
+        <img th:src="@{/pharmacy-logo.jpg}" style="width: 8%; height: 8% "/><a class="navbar-brand" href="/pharmacies/home">Моја<b>Аптека</b></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
                 aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -44,13 +44,13 @@
 <div class="container">
     <div class="row">
         <div class="col-md-5">
-            <form th:method="POST" th:action="@{/pharmacies/home}">
+            <form th:method="GET" th:action="@{/pharmacies/home}">
                 <div class="form-group">
                     <h3><b>Пребарај аптеки</b></h3>
                     <label>Избери општина</label>
-                    <select name="nameMunicipality" class="form-control">
+                    <select name="idMunicipality" class="form-control">
                                                 <option th:each="mn : ${municipalities}"
-                                                        th:value="${mn.getName()}"
+                                                        th:value="${mn.getId()}"
                                                         th:text="${mn.getName()}">
                                                 </option>
 
@@ -63,17 +63,22 @@
                     <tr>
                         <th scope="col">Име на аптека</th>
                         <th scope="col">Работно време</th>
+                        <th scope="col">Адреса</th>
+                        <th scope="col">Рејтинг</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="pharmacy : ${pharmacies}" class="pharmacy">
                         <td th:text="${pharmacy.getName()}"></td>
                         <td th:text="${pharmacy.getWorkingHours()}"></td>
+                        <td th:text="${pharmacy.getAddress()}"></td>
+                        <td></td>
+
+
                     </tr>
                     </tbody>
                 </table>
             </form>
-
 
 
         </div>

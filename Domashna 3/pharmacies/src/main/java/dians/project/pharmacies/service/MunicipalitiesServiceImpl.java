@@ -24,9 +24,9 @@ public class MunicipalitiesServiceImpl implements MunicipalitiesService{
     public Municipality findByName(String name) {
         return municipalitiesRepository.findMunicipalityByName(name);
     }
-    public List<Pharmacy> findPharmaciesByMunicipalityName(String name)
-    {
-        Municipality municipality = municipalitiesRepository.findMunicipalityByName(name);
-        return municipality.pharmacyList;
-    }
+//    public List<Pharmacy> findPharmaciesByMunicipalityName(String name)
+//    {
+//        Municipality municipality = municipalitiesRepository.findMunicipalityByName(name);
+//        return municipality.pharmacyList;
+//    }
 }

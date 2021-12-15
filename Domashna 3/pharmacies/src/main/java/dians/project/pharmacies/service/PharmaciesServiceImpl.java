@@ -1,6 +1,8 @@
 package dians.project.pharmacies.service;
 
+import dians.project.pharmacies.model.Municipality;
 import dians.project.pharmacies.model.Pharmacy;
+import dians.project.pharmacies.repository.MunicipalityRepository;
 import dians.project.pharmacies.repository.PharmacyRepository;
 import org.springframework.stereotype.Service;
 
@@ -8,10 +10,12 @@ import java.util.List;
 
 @Service
 public class PharmaciesServiceImpl implements PharmaciesService {
-    public final PharmacyRepository pharmaciesRepository;
-    public PharmaciesServiceImpl(PharmacyRepository pharmaciesRepository)
+    private final PharmacyRepository pharmaciesRepository;
+    private final MunicipalityRepository municipalityRepository;
+    public PharmaciesServiceImpl(PharmacyRepository pharmaciesRepository, MunicipalityRepository municipalityRepository)
     {
         this.pharmaciesRepository=pharmaciesRepository;
+        this.municipalityRepository = municipalityRepository;
     }
 
     @Override
@@ -24,5 +28,8 @@ public class PharmaciesServiceImpl implements PharmaciesService {
         return pharmaciesRepository.findPharmaciesByName(name);
     }
 
+    public List<Pharmacy> findByMunicipality(Long id) {
+        Municipality m = municipalityRepository.findMunicipalityById(id);
+        return pharmaciesRepository.findPharmaciesByOpstina(m);}
 
 }

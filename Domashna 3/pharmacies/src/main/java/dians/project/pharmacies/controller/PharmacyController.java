@@ -19,9 +19,13 @@ public class PharmacyController {
     }
 
     @GetMapping("/home")
-    public String homePage(@RequestParam(required = false) String namePharmacy, Model model) {
-
-        model.addAttribute("pharmacies", pharmaciesService.findByName(namePharmacy));
+    public String homePage(@RequestParam(required = false) String namePharmacy,
+                           @RequestParam(required = false) String idMunicipality,
+                           Model model) {
+        if(namePharmacy != null)
+            model.addAttribute("pharmacies", pharmaciesService.findByName(namePharmacy));
+        if(idMunicipality != null)
+            model.addAttribute("pharmacies", pharmaciesService.findByMunicipality(Long.parseLong(idMunicipality)));
         model.addAttribute("municipalities", municipalitiesService.findAll());
         return "homePage";
     }
