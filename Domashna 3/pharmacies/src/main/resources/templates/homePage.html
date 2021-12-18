@@ -7,7 +7,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 <nav class="navbar navbar-expand-md navbar-light bg-white">
@@ -43,22 +43,22 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-5">
+        <div class="col-md-6">
             <form th:method="GET" th:action="@{/pharmacies/home}">
                 <div class="form-group">
                     <h3><b>Пребарај аптеки</b></h3>
                     <label>Избери општина</label>
                     <select name="idMunicipality" class="form-control">
+                                                <option value="0">Избери општина</option>
                                                 <option th:each="mn : ${municipalities}"
                                                         th:value="${mn.getId()}"
                                                         th:text="${mn.getName()}">
                                                 </option>
-
                     </select>
                 </div>
-                <button id="submit" type="submit" class="btn btn-primary" style="width: 445px">Пронајди аптеки</button>
+                <button id="submit" type="submit" class="btn btn-primary btn-block">Пронајди аптеки</button>
 
-                <table class="table">
+                <table class="table" th:if="${pharmacies}">
                     <thead>
                     <tr>
                         <th scope="col">Име на аптека</th>
@@ -72,9 +72,18 @@
                         <td th:text="${pharmacy.getName()}"></td>
                         <td th:text="${pharmacy.getWorkingHours()}"></td>
                         <td th:text="${pharmacy.getAddress()}"></td>
-                        <td></td>
-
-
+                        <td>
+                            <div class="rate">
+                                <input type="hidden" name="rating">
+                                <div class="rating-stars">
+                                    <span data-value="1">★</span>
+                                    <span data-value="2">★</span>
+                                    <span data-value="3">★</span>
+                                    <span data-value="4">★</span>
+                                    <span data-value="5">★</span>
+                                </div>
+                            </div>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
@@ -82,10 +91,9 @@
 
 
         </div>
-
-                <div class="col-md-5">
-                    <div id="googleMap" style="width:600px;height:500px;"></div>
-                </div>
+        <div class="col-md-6">
+            <div id="googleMap" style="width:100%;height:500px;"></div>
+        </div>
     </div>
 </div>
 <footer class="text-black-50 mt-xl-5" xmlns:th="http://www.thymeleaf.org">
@@ -152,6 +160,68 @@
             });
         });
     }
+
+    document.querySelectorAll(".rate span").forEach(star => {
+
+        // On click show how many stars are selected & change the input field for rating
+        star.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            // Clear current selection
+            this.parentElement.querySelectorAll("span").forEach(starItem => {
+                starItem.classList.remove("checked");
+            });
+
+            // Add checked class to all previous stars
+            let previousStar = this.previousElementSibling;
+            while(previousStar) {
+                previousStar.classList.add("checked");
+                previousStar = previousStar.previousElementSibling;
+            }
+
+            // Add checked class to myself
+            this.classList.add("checked");
+
+            // Change the actual rating in the input field
+            let currentRating = this.getAttribute("data-value");
+            this.parentElement.parentElement.querySelector('input[name="rating"]').value = currentRating;
+        })
+
+        // Add effect on hover
+        star.addEventListener("mouseenter", function () {
+
+            // Clear current selection
+            this.parentElement.querySelectorAll("span").forEach(starItem => {
+                starItem.classList.remove("active");
+            });
+
+            // Add active class to all previous stars
+            let previousStar = this.previousElementSibling;
+            while(previousStar) {
+                previousStar.classList.add("active");
+                previousStar = previousStar.previousElementSibling;
+            }
+
+            // Add active class to myself
+            this.classList.add("active");
+
+            // Add hover-class to the parent node
+            this.parentElement.classList.add("hover");
+
+        })
+
+        star.addEventListener("mouseleave", function () {
+
+            // Clear current selection
+            this.parentElement.querySelectorAll("span").forEach(starItem => {
+                starItem.classList.remove("active");
+            });
+
+            // Remove hover-class to the parent node
+            this.parentElement.classList.remove("hover");
+
+        })
+    })
 </script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBT5zN2CF23G_06Tp8ySNOxzdFK5Hn6CWQ&callback=myMap"></script>

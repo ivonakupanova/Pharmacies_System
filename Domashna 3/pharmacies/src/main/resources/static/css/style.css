@@ -1,0 +1,23 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.rate {
+    display: block;
+}
+.rate .rating-stars {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+.rate .rating-stars span {
+    cursor: pointer;
+    color: #666;
+    font-size: 18px;
+}
+.rate .rating-stars span.active {
+    color: #ffe135;
+}
+.rate .rating-stars:not(.hover) span.checked {
+    color: #ffe135;
+}
