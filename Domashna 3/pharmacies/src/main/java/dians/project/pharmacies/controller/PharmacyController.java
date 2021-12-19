@@ -1,10 +1,13 @@
 package dians.project.pharmacies.controller;
 
+import dians.project.pharmacies.model.Pharmacy;
 import dians.project.pharmacies.service.MunicipalitiesServiceImpl;
 import dians.project.pharmacies.service.PharmaciesServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/pharmacies")
@@ -37,5 +40,23 @@ public class PharmacyController {
         return "aboutUsPage";
     }
 
+    //REST - VRAKAAT PODATOCI
+    @GetMapping("/api/findAll")
+    @ResponseBody
+    public List<Pharmacy> apiFindAll(){
+
+        return pharmaciesService.findAll();
+    }
+    @GetMapping("/api/filterByMunicipality")
+    public List<Pharmacy> apiPharmaciesByOpstina(Long id)
+    {
+        return pharmaciesService.findByMunicipality(id);
+    }
+    @PostMapping("/api/filterPharmacyName")
+    @ResponseBody
+    public List<Pharmacy> apiPharmaciesByName(@RequestParam String name)
+    {
+        return pharmaciesService.findByName(name);
+    }
 
 }

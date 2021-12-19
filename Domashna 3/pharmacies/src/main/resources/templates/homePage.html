@@ -87,6 +87,9 @@
                     </tbody>
                 </table>
             </form>
+            <form>
+                <button id="map" type="submit" class="btn btn-primary" style="width: 445px">Прикажи на мапа</button>
+            </form>
         </div>
                 <div class="col-md-5">
                     <div id="googleMap" style="width:600px;height:500px;"></div>
@@ -106,41 +109,113 @@
 
 </footer>
 <script>
+    pharmacies = [
+        [{
+            lat: 42.0061233,
+            lng: 21.3816633
+
+        }, "Some pharmacy"],
+    ];
+
+    xhr1 = new XMLHttpRequest();
+    xhr1.onreadystatechange=function(){
+        if (xhr1.readyState==4 && xhr1.status==200)
+        {
+            data1=xhr1.response;
+            for (i=0;i<data1.length;i++)
+            {
+                pharmacies[i]=[
+                    {
+                        lat : data1[i].coordinatesLat,
+                        lng : data1[i].coordinatesLon
+                    }, data1[i].name];
+            }
+            // console.log(pharmacies);
+            myMap();
+
+        }
+    }
+    xhr1.open('get','http://localhost:9090/pharmacies/api/findAll');
+    xhr1.responseType='json'
+    xhr1.send();
+
+    button = document.getElementById("map");
+    button.addEventListener("click",function(){
+        xhr = new XMLHttpRequest();
+        xhr.onreadystatechange=function(){
+            if (xhr.readyState==4 && xhr.status==200)
+            {
+                data=xhr.response;
+                console.log(data);
+                for (i=0;i<data.length;i++)
+                {
+                    pharmacies[i]=[
+                        {
+                            lat : data[i].coordinatesLat,
+                            lng : data[i].coordinatesLon
+                        }, data[i].name];
+                }
+                // console.log(pharmacies);
+                myMap();
+
+            }
+        }
+        if (document.getElementById("searchByName").value!=null)
+        {
+            var formData = new FormData();
+            xhr.open('post','http://localhost:9090/pharmacies/api/filterPharmacyName');
+            param=document.getElementById("searchByName").value;
+            formData.append("name",param)
+            xhr.responseType='json'
+            xhr.send(formData);
+        }
+        else if (document.getElementById("searchByName").value==null)
+        {
+            xhr.open('post','http://localhost:9090/pharmacies/api/filterByMunicipality');
+            param=document.getElementByName("idMunicipality").value;
+            // console.log(param)
+            xhr.responseType='json'
+            xhr.send();
+        }
+
+    });
     function myMap() {
         var mapProp = {
 
             center: new google.maps.LatLng(41.9981, 21.4254),
-            zoom: 15,
+            zoom: 14,
         };
         var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+        //
+        // const tourStops = [
+        //     [{
+        //         lat: 42.0061233,
+        //         lng: 21.3816633
+        //
+        //     }, "Some pharmacy"],
+        //     [{
+        //         lat: 41.9918820,
+        //         lng: 21.4273351
+        //     }, "Zegin"],
+        //     [{
+        //         lat: 41.9964256,
+        //         lng: 21.4996627
+        //     }, "Apteka biofit"],
+        //     [{
+        //         lat: 41.9954834,
+        //         lng: 21.5039025
+        //     }, "Herba"],
+        //     [{
+        //         lat: 41.9984708,
+        //         lng: 21.4226797
+        //     }, "Uni medikal"],
+        // ];
 
-        const tourStops = [
-            [{
-                lat: 42.0061233,
-                lng: 21.3816633
-
-            }, "Some pharmacy"],
-            [{
-                lat: 41.9918820,
-                lng: 21.4273351
-            }, "Zegin"],
-            [{
-                lat: 41.9964256,
-                lng: 21.4996627
-            }, "Apteka biofit"],
-            [{
-                lat: 41.9954834,
-                lng: 21.5039025
-            }, "Herba"],
-            [{
-                lat: 41.9984708,
-                lng: 21.4226797
-            }, "Uni medikal"],
-        ];
-
+        // console.log(tourStops)
         const infoWindow = new google.maps.InfoWindow();
 
-        tourStops.forEach(([position, title], i) => {
+        pharmacies.forEach(([position, title], i) => {
+            console.log(i[0])
             const marker = new google.maps.Marker({
                 position,
                 map,
@@ -157,30 +232,7 @@
             });
         });
     }
-
-    let stars = document.querySelectorAll(".rating-stars span");
-    stars.forEach(star => {
-        star.addEventListener("click", function (e) {
-            let element = this.previousElementSibling;
-            while(element) {
-                element.classList.remove("selected");
-                element = element.previousElementSibling;
-            }
-
-            element = this.nextElementSibling;
-            while(element) {
-                element.classList.add("selected");
-                element = element.nextElementSibling;
-            }
-
-            this.classList.add("selected");
-
-            let rating = this.getAttribute("data-rating");
-            let input = this.parentElement.querySelector("input");
-        })
-    })
 </script>
-
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBT5zN2CF23G_06Tp8ySNOxzdFK5Hn6CWQ&callback=myMap"></script>
 
 </body>
