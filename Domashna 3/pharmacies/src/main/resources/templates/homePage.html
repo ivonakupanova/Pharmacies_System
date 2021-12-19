@@ -7,7 +7,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
 </head>
 <body>
 <nav class="navbar navbar-expand-md navbar-light bg-white">
@@ -49,6 +49,7 @@
                     <h3><b>Пребарај аптеки</b></h3>
                     <label>Избери општина</label>
                     <select name="idMunicipality" class="form-control">
+                                                <option value="0">Избери Општина</option>
                                                 <option th:each="mn : ${municipalities}"
                                                         th:value="${mn.getId()}"
                                                         th:text="${mn.getName()}">
@@ -58,7 +59,7 @@
                 </div>
                 <button id="submit" type="submit" class="btn btn-primary" style="width: 445px">Пронајди аптеки</button>
 
-                <table class="table">
+                <table class="table" th:if="${pharmacies}">
                     <thead>
                     <tr>
                         <th scope="col">Име на аптека</th>
@@ -72,17 +73,21 @@
                         <td th:text="${pharmacy.getName()}"></td>
                         <td th:text="${pharmacy.getWorkingHours()}"></td>
                         <td th:text="${pharmacy.getAddress()}"></td>
-                        <td></td>
-
-
+                        <td>
+                            <div class="rating-stars">
+                                <input type="hidden" name="rating">
+                                <span data-rating="5">★</span>
+                                <span data-rating="4">★</span>
+                                <span data-rating="3">★</span>
+                                <span data-rating="2">★</span>
+                                <span data-rating="1">★</span>
+                            </div>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
             </form>
-
-
         </div>
-
                 <div class="col-md-5">
                     <div id="googleMap" style="width:600px;height:500px;"></div>
                 </div>
@@ -152,6 +157,28 @@
             });
         });
     }
+
+    let stars = document.querySelectorAll(".rating-stars span");
+    stars.forEach(star => {
+        star.addEventListener("click", function (e) {
+            let element = this.previousElementSibling;
+            while(element) {
+                element.classList.remove("selected");
+                element = element.previousElementSibling;
+            }
+
+            element = this.nextElementSibling;
+            while(element) {
+                element.classList.add("selected");
+                element = element.nextElementSibling;
+            }
+
+            this.classList.add("selected");
+
+            let rating = this.getAttribute("data-rating");
+            let input = this.parentElement.querySelector("input");
+        })
+    })
 </script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBT5zN2CF23G_06Tp8ySNOxzdFK5Hn6CWQ&callback=myMap"></script>
