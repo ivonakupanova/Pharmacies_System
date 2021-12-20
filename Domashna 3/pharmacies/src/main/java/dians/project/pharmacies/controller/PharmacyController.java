@@ -44,19 +44,19 @@ public class PharmacyController {
     @GetMapping("/api/findAll")
     @ResponseBody
     public List<Pharmacy> apiFindAll(){
-
         return pharmaciesService.findAll();
     }
-    @GetMapping("/api/filterByMunicipality")
-    public List<Pharmacy> apiPharmaciesByOpstina(Long id)
-    {
-        return pharmaciesService.findByMunicipality(id);
-    }
-    @PostMapping("/api/filterPharmacyName")
+    @GetMapping("/api/findByMunicipality")
     @ResponseBody
-    public List<Pharmacy> apiPharmaciesByName(@RequestParam String name)
+    public List<Pharmacy> apiPharmaciesByOpstina(@RequestParam(required = false) String idMunicipality)
     {
-        return pharmaciesService.findByName(name);
+        return pharmaciesService.findByMunicipality(Long.parseLong(idMunicipality));
+    }
+    @GetMapping("/api/findByName")
+    @ResponseBody
+    public List<Pharmacy> apiPharmaciesByName(@RequestParam(required = false) String namePharmacy)
+    {
+        return pharmaciesService.findByName(namePharmacy);
     }
 
 }
