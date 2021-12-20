@@ -219,6 +219,27 @@
             });
         });
     }
+    let stars = document.querySelectorAll(".rating-stars span");
+    stars.forEach(star => {
+        star.addEventListener("click", function (e) {
+            let element = this.previousElementSibling;
+            while(element) {
+                element.classList.remove("selected");
+                element = element.previousElementSibling;
+            }
+
+            element = this.nextElementSibling;
+            while(element) {
+                element.classList.add("selected");
+                element = element.nextElementSibling;
+            }
+
+            this.classList.add("selected");
+
+            let rating = this.getAttribute("data-rating");
+            let input = this.parentElement.querySelector("input");
+        })
+    })
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBT5zN2CF23G_06Tp8ySNOxzdFK5Hn6CWQ&callback=myMap"></script>
 
