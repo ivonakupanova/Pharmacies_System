@@ -1,9 +1,6 @@
 package dians.project.pharmacies.pharmacy.controller;
-
 import dians.project.pharmacies.pharmacy.model.Pharmacy;
 import dians.project.pharmacies.pharmacy.service.PharmacyServiceImpl;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

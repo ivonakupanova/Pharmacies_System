@@ -1,6 +1,4 @@
 package dians.project.pharmacies.municipality.service;
-
-
 import dians.project.pharmacies.municipality.model.Municipality;
 import dians.project.pharmacies.municipality.repository.MunicipalityRepository;
 import org.springframework.stereotype.Service;
@@ -21,14 +19,7 @@ public class MunicipalityServiceImpl implements MunicipalityService {
     }
 
     @Override
-    public Municipality findByName(String name) {
-
-        return municipalitiesRepository.findMunicipalityByName(name);
-    }
-
-    @Override
     public Municipality findById(Long id) {
         return this.municipalitiesRepository.findMunicipalityById(id);
     }
-
 }

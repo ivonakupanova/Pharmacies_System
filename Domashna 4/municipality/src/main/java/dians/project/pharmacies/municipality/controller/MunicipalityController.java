@@ -2,7 +2,6 @@ package dians.project.pharmacies.municipality.controller;
 import dians.project.pharmacies.municipality.model.Municipality;
 import dians.project.pharmacies.municipality.service.MunicipalityServiceImpl;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController

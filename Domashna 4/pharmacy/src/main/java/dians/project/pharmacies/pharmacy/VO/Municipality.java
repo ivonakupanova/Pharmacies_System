@@ -11,12 +11,4 @@ public class Municipality {
     private double coordinatesLon;
 
     private double coordinatesLat;
-
-    public Municipality(){}
-
-    public Municipality(String name, double coordinatesLon, double coordinatesLat) {
-        this.name = name;
-        this.coordinatesLon = coordinatesLon;
-        this.coordinatesLat = coordinatesLat;
-    }
 }
