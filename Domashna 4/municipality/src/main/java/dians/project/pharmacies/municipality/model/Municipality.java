@@ -1,14 +1,9 @@
 package dians.project.pharmacies.municipality.model;
-
 import lombok.Data;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-
 import javax.persistence.Entity;
-import javax.persistence.*;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.List;
 
 @Data
 @Entity

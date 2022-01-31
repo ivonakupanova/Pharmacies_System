@@ -1,14 +1,9 @@
 package dians.project.pharmacies.pharmaciesmicro.controller;
-
-import dians.project.pharmacies.pharmaciesmicro.VO.Municipality;
 import dians.project.pharmacies.pharmaciesmicro.VO.Pharmacy;
-import dians.project.pharmacies.pharmaciesmicro.VO.ResponseTemplateVO;
 import dians.project.pharmacies.pharmaciesmicro.service.PharmaciesServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/pharmacies")
@@ -42,12 +37,6 @@ public class PharmaciesController {
         return "aboutUsPage";
     }
 
-//    @GetMapping("/api/findAll")
-//    @ResponseBody
-//    public Pharmacy[] apiFindAll(){
-//        return pharmaciesService.findAllPharmacies().getPharmacies();
-//    }
-//
     @GetMapping("/api/findByMunicipality")
     @ResponseBody
     public Pharmacy[] apiPharmaciesByOpstina(@RequestParam(required = false)

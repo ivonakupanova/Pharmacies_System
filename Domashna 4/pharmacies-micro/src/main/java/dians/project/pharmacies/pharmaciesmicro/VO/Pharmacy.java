@@ -19,15 +19,4 @@ public class Pharmacy {
 
     private Long municipalityId;
 
-    public Pharmacy() {
-    }
-
-    public Pharmacy(String name, double coordinatesLon,
-                    double coordinatesLat, String workingHours, Long municipalityId) {
-        this.name = name;
-        this.municipalityId = municipalityId;
-        this.coordinatesLon = coordinatesLon;
-        this.coordinatesLat = coordinatesLat;
-        this.workingHours = workingHours;
-    }
 }
